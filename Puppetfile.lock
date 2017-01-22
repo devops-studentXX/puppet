@@ -1,0 +1,26 @@
+FORGE
+  remote: https://forgeapi.puppetlabs.com
+  specs:
+    puppet-staging (1.0.7)
+    puppetlabs-concat (2.2.0)
+      puppetlabs-stdlib (< 5.0.0, >= 4.2.0)
+    puppetlabs-java (1.6.0)
+      puppetlabs-stdlib (< 5.0.0, >= 2.4.0)
+    puppetlabs-stdlib (4.15.0)
+    puppetlabs-tomcat (1.6.0)
+      puppet-staging (< 2.0.0, >= 0.4.1)
+      puppetlabs-concat (< 3.0.0, >= 1.1.0)
+      puppetlabs-stdlib (< 5.0.0, >= 4.6.0)
+
+GIT
+  remote: https://github.com/cescoffier/puppet-nexus.git
+  ref: master
+  sha: e47041f889fa8fcf27c98a9eb08c2ccfca53080b
+  specs:
+    puppet-nexus (0.0.1)
+
+DEPENDENCIES
+  puppet-nexus (>= 0)
+  puppetlabs-java (= 1.6.0)
+  puppetlabs-tomcat (= 1.6.0)
+
