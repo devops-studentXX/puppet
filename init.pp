@@ -18,12 +18,9 @@ class {'nexus':
 }
 
 case $app_repository {
-  "snapshots": {
-    $artifact_version = "$app_version-SNAPSHOT"
-  }
-  "releases": {
-    $artifact_version = "$app_version"
-  }
+  "snapshots": { $artifact_version = "$app_version-SNAPSHOT" }
+  "releases": { $artifact_version = "$app_version" }
+  default: { $artifact_version = "$app_version-SNAPSHOT" }
 }
 
 # Checks that the file is present, downloads it if needed
