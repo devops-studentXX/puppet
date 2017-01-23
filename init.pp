@@ -12,15 +12,23 @@ tomcat::instance { 'default':
 
 # Nexus configuration
 class {'nexus':
-    url      => "$repo_url",
+    url      => "$repo_site",
     username => "$repo_user",
     password => "$repo_password"
 }
 
+case $app_repository {
+  "snapshots": {
+    $artifact_version = "$app_version-SNAPSHOT"
+  }
+  "releases": {
+    $artifact_version = "$app_version"
+  }
+}
 
 # Checks that the file is present, downloads it if needed
 nexus::artifact {'MyApp':
-    gav        => "$app_group_id:$app_artifact_id:$app_version",
+    gav        => "$app_group_id:$app_artifact_id:$artifact_version",
     repository => "$app_repository",
     packaging  => "war",
     output     => "/opt/tomcat/webapps/MyApp.war",
