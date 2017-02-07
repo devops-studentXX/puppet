@@ -3,7 +3,7 @@
 class { 'java': }
 
 tomcat::install { '/opt/tomcat':
-  source_url => 'https://www.apache.org/dist/tomcat/tomcat-8/v8.0.39/bin/apache-tomcat-8.0.39.tar.gz'
+  source_url => 'https://www.apache.org/dist/tomcat/tomcat-8/v8.0.41/bin/apache-tomcat-8.0.41.tar.gz'
 }
 
 tomcat::instance { 'default':
@@ -17,15 +17,14 @@ class {'nexus':
     password => "$repo_password"
 }
 
-case $app_repository {
-  "snapshots": { $artifact_version = "$app_version-SNAPSHOT" }
-  "releases": { $artifact_version = "$app_version" }
-  default: { $artifact_version = "$app_version-SNAPSHOT" }
+case $app_version {
+  /-SNAPSHOT$/: { $app_repository = "snapshots" }
+  default: { $app_repository = "releases" }
 }
 
 # Checks that the file is present, downloads it if needed
 nexus::artifact {'MyApp':
-    gav        => "$app_group_id:$app_artifact_id:$artifact_version",
+    gav        => "$app_group_id:$app_artifact_id:$app_version",
     repository => "$app_repository",
     packaging  => "war",
     output     => "/opt/tomcat/webapps/MyApp.war",
